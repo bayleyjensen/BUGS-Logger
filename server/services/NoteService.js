@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import Bug from "../models/Bug";
+import Note from "../models/Note";
 import ApiError from "../utils/ApiError";
 
-const _repository = mongoose.model("Bug", Bug);
+const _repository = mongoose.model("Note", Note);
 
-class BugService {
+class NoteService {
   async getAll() {
     return await _repository.find({});
   }
@@ -14,9 +14,7 @@ class BugService {
     if (!data) {
       throw new ApiError("Invalid ID", 400);
     }
-    return data;
   }
-
   async create(rawData) {
     let data = await _repository.create(rawData);
     return data;
@@ -40,5 +38,5 @@ class BugService {
   }
 }
 
-const bugService = new BugService();
-export default bugService;
+const noteService = new NoteService();
+export default noteService;
