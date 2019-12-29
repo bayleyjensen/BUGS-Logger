@@ -5,7 +5,15 @@
       <div class="col">
         <addBug />
       </div>
-      {{ bugs }}
+      <div class='col-12'>
+        <ol>
+          <li v-for="bug in bugs" :key="bug._id">
+            <router-link :to="{ name: 'bugDetails', params: { id: bug._id } }">
+              {{ bug.title }}</router-link
+            >
+          </li>
+        </ol>
+      </div>
     </div>
   </div>
 </template>

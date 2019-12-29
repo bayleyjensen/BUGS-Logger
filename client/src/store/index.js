@@ -20,18 +20,25 @@ export default new Vuex.Store({
     },
     setBugs(state, payload) {
       state.bugs = payload;
+    },
+    setActiveBug(state, payload) {
+      state.activeBlog = payload;
     }
   },
   actions: {
     async addBug({ commit, dispatch }, bug) {
       let res = await _bugApi.post("bugs", bug);
-      commit("createBug", res.data);
+      commit("addBug", res.data);
     },
     async getAllBugs({ commit, dispatch }) {
       let res = await _bugApi.get("bugs");
       console.log(res.data);
       commit("setBugs", res.data);
-    }
+    },
+    async getActiveBug({ commit, dispatch }, id) {
+      let res = await _bugApi.get("bugs/" + id);
+      commit("setActiveBug", res.data.data);
+    },
   },
   modules: {}
 });

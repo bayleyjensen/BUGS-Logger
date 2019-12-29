@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 // @ts-ignore
 import Bug from "../views/Bug.vue";
+// @ts-ignore
+import BugDetails from "../views/BugDetails.vue";
 
 Vue.use(VueRouter);
 
@@ -12,12 +14,12 @@ const routes = [
     component: Bug
   },
   {
-    path: "/note",
-    name: "about",
+    path: "/bugDetails",
+    name: "bugDetails",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: function() {}
+    component: BugDetails
   }
 ];
 
