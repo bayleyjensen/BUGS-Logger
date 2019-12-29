@@ -29,11 +29,14 @@ class BugService {
     if (!data) {
       throw new ApiError("Invalid ID", 400);
     }
+    if (data.closed == true){
+      throw new ApiError("Can not edit closed bug." 400)
+    }
     return data;
   }
 
   async delete(id) {
-    let data = await _repository.findOneAndUpdate({ _id: id }, { sold: true });
+    let data = await _repository.findOneAndUpdate({ _id: id }, { closed: true });
     if (!data) {
       throw new ApiError("Invalid ID", 400);
     }

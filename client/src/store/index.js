@@ -12,7 +12,8 @@ const _bugApi = axios.create({
 export default new Vuex.Store({
   state: {
     bugs: [],
-    activeBug: {}
+    activeBug: {},
+    notes: []
   },
   mutations: {
     addBug(state, payload) {
@@ -22,7 +23,7 @@ export default new Vuex.Store({
       state.bugs = payload;
     },
     setActiveBug(state, payload) {
-      state.activeBlog = payload;
+      state.activeBug = payload;
     }
   },
   actions: {
@@ -37,7 +38,7 @@ export default new Vuex.Store({
     },
     async getActiveBug({ commit, dispatch }, id) {
       let res = await _bugApi.get("bugs/" + id);
-      commit("setActiveBug", res.data.data);
+      commit("setActiveBug", res.data);
     },
   },
   modules: {}

@@ -5,15 +5,16 @@ import ApiError from "../utils/ApiError";
 const _repository = mongoose.model("Note", Note);
 
 class NoteService {
-  async getAll() {
-    return await _repository.find({});
-  }
-  async getById(id) {
+  
+  async getNotesById(id) {
     let data = await _repository.findById(id);
     return data;
     if (!data) {
       throw new ApiError("Invalid ID", 400);
     }
+  }
+  async getBugsNotes(BugId){
+    let data = await _repository
   }
   async create(rawData) {
     let data = await _repository.create(rawData);
