@@ -3,29 +3,44 @@
     <form @submit.prevent="addNote">
       <input type="text" name="reportedBy" v-model="newNote.reportedBy" placeholder="who are you?" />
       <input type="text" name="contents" v-model="newNote.content" placeholder="type here..." />
+      <button type="submit" class="btn btn-primary">submit</button>
     </form>
+    <div>
+      <ol>
+        <li v-for="note in notes" :key="note._id">{{note.reportedBy}},{{note.content}}</li>
+      </ol>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "add-note",
+  name: "addNote",
   data() {
     return {
-      newComment: {
+      newNote: {
         reportedBy: "",
-        content: ""
+        content: "",
+        bug: this.$route.params.id
       }
     };
   },
   methods: {
     addNote() {
-      let note = { ...this.newComment };
-      this.$store.dispatch("addNote", note);
-      this.newComment = {
+      let note = { ...this.newNote };
+
+      this.newNote = {
         reportedBy: "",
-        content: ""
+        content: "",
+        bug: this.$route.params.id
       };
+      this.$store.dispatch("addNote", note);
+    }
+  },
+  computed: {
+    notes() {
+      console.log("this is my active notes", this.$store.state.activeNotes);
+      return this.$store.state.activeNotes;
     }
   }
 };
