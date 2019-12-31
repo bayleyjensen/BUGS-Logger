@@ -7,7 +7,13 @@
     </form>
     <div>
       <ol>
-        <li v-for="note in notes" :key="note._id">{{note.reportedBy}},{{note.content}}</li>
+        <li v-for="note in notes" :key="note._id">
+          {{note.reportedBy}},{{note.content}}
+          <button
+            class="btn btn-danger"
+            @click.prevent="deleteNote"
+          >Delete</button>
+        </li>
       </ol>
     </div>
   </div>
@@ -35,6 +41,9 @@ export default {
         bug: this.$route.params.id
       };
       this.$store.dispatch("addNote", note);
+    },
+    deleteNote() {
+      this.$store.dispatch("deleteNote", this.params.id);
     }
   },
   computed: {

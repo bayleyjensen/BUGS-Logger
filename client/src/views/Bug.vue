@@ -3,7 +3,12 @@
     WELCOME TO THE BUG VIEW
     <div class="row">
       <div class="col">
-        <addBug />
+        <input type="checkbox" v-model="drawAddBug" />add bug
+        <br />
+        <span v-if="drawAddBug">
+          <addBug />
+        </span>
+        <br />
       </div>
       <div class="col-12">
         <ol>
@@ -22,6 +27,11 @@
 import addBug from "../components/addBug";
 export default {
   name: "bug",
+  data() {
+    return {
+      drawAddBug: false
+    };
+  },
   mounted() {
     this.$store.dispatch("getAllBugs");
   },
