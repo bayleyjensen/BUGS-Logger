@@ -3,20 +3,30 @@
     WELCOME TO THE BUG VIEW
     <div class="row">
       <div class="col">
-        <input type="checkbox" v-model="drawAddBug" />add bug
-        <br />
-        <span v-if="drawAddBug">
+        <button class="btn btn-success" @click="show">report Bug</button>
+        <modal name="bugModal">
           <addBug />
-        </span>
-        <br />
+        </modal>
       </div>
       <div class="col-12">
-        <ol>
-          <li v-for="bug in bugs" :key="bug._id">
-            <router-link :to="{ name: 'bugDetails', params: { id: bug._id } }">{{ bug.title }}</router-link>
-            , {{bug.closed}}
+        <ul>
+          <li class="d-flex" id="Bugs" v-for="bug in bugs" :key="bug._id">
+            <div class="col-4">
+              Bug Title:
+              <router-link
+                :to="{ name: 'bugDetails', params: { id: bug._id } }"
+                >{{ bug.title }}</router-link
+              >
+            </div>
+            <div class="col-4">Reporter: {{ bug.reportedBy }}</div>
+            <div class="col-4" v-if="bug.closed === true">
+              Bugs Current Status: closed
+            </div>
+            <div class="col-4" v-if="bug.closed === false">
+              Bug Current Satus: open
+            </div>
           </li>
-        </ol>
+        </ul>
       </div>
     </div>
   </div>
@@ -35,6 +45,14 @@ export default {
   mounted() {
     this.$store.dispatch("getAllBugs");
   },
+  methods: {
+    show() {
+      this.$modal.show("bugModal");
+    },
+    hide() {
+      this.$modal.hide("bugModal");
+    }
+  },
   components: {
     addBug
   },
@@ -46,3 +64,12 @@ export default {
   }
 };
 </script>
+
+<style>
+#Bugs {
+  text-align: center;
+  margin-top: 2em;
+  border: solid;
+  height: 2em;
+}
+</style>

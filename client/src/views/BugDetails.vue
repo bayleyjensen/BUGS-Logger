@@ -1,14 +1,39 @@
 <template>
   <div>
     <div class="bugDetails container-fluid">
-      <div class="row">welcome to the glorious bug detials ahhhhhh</div>
-      <div class="row">{{bug.title}}</div>
-      <div class="col-3">{{bug.reportedBy}}</div>
-      <div class="col-3">{{bug.description}}</div>
+      <div class="row">Bug Details</div>
+      <div>
+        <h4 class="bugTitle">title</h4>
+      </div>
+      <div class="row">{{ bug.title }}</div>
+      <div class="col-3">{{ bug.reportedBy }}</div>
+      <div class="col-3">{{ bug.description }}</div>
       <div class="col-3" v-if="bug.closed === false">closed</div>
       <div class="col-3" v-if="bug.closed === true">open</div>
-      <button @sumbmit.prevent="editBug">Edit Bug</button>
-      <button v-if="bug.closed === true " class="btn btn-danger" @click.prevent="closeBug">Close Bug</button>
+      <button @click="show">Edit Bug</button>
+      <modal name="editedBugModal">
+        <form>
+          <input
+            type="text"
+            name="title"
+            v-model="editedBug.title"
+            placeholder="New Title..."
+          />
+          <input
+            type="text"
+            name="descripton"
+            v-model="editedBug.description"
+            placeholder="New Descripton..."
+          />
+        </form>
+      </modal>
+      <button
+        v-if="bug.closed === true"
+        class="btn btn-danger"
+        @click.prevent="closeBug"
+      >
+        Close Bug
+      </button>
     </div>
     <div class="bugNotes container-fluid">
       <div class="row">
@@ -25,6 +50,14 @@
 import addNote from "../components/addNote";
 export default {
   name: "bugDetails",
+  data() {
+    return {
+      editedBug: {
+        title: "",
+        description: ""
+      }
+    };
+  },
   mounted() {
     this.$store.dispatch("getActiveBug", this.$route.params.id);
     this.$store.dispatch("getNotesByBugId", this.$route.params.id);
@@ -32,6 +65,12 @@ export default {
   methods: {
     closeBug() {
       this.$store.dispatch("closeBug", this.$route.params.id);
+    },
+    show() {
+      this.$modal.show("editedBugModal");
+    },
+    hide() {
+      this.$modal.hide("editedBugModal");
     }
   },
   computed: {

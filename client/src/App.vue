@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">BUG</router-link>|
-    </div>
+    <h1>
+      <div id="nav">
+        Bug
+        <router-link to="/">
+          <i class="fas fa-bug"></i>
+        </router-link>Logger
+      </div>
+    </h1>
     <router-view />
   </div>
 </template>
@@ -12,7 +17,6 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
@@ -27,5 +31,8 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+#nav {
+  text-align: center;
 }
 </style>
