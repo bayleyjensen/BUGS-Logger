@@ -8,11 +8,11 @@
       <div class="row">{{ bug.title }}</div>
       <div class="col-3">{{ bug.reportedBy }}</div>
       <div class="col-3">{{ bug.description }}</div>
-      <div class="col-3" v-if="bug.closed === false">closed</div>
-      <div class="col-3" v-if="bug.closed === true">open</div>
+      <div class="col-3" v-if="bug.closed === true">closed</div>
+      <div class="col-3" v-if="bug.closed === false">open</div>
       <button @click="show">Edit Bug</button>
       <modal name="editedBugModal">
-        <form>
+        <form @submit.prevent="editBug">
           <input
             type="text"
             name="title"
@@ -25,10 +25,13 @@
             v-model="editedBug.description"
             placeholder="New Descripton..."
           />
+          <button @click="hide" class="btn btn-primary">
+            Submit Edited Version
+          </button>
         </form>
       </modal>
       <button
-        v-if="bug.closed === true"
+        v-if="bug.closed === false"
         class="btn btn-danger"
         @click.prevent="closeBug"
       >
@@ -54,7 +57,8 @@ export default {
     return {
       editedBug: {
         title: "",
-        description: ""
+        description: "",
+        id: this.$route.params.id
       }
     };
   },
@@ -64,13 +68,31 @@ export default {
   },
   methods: {
     closeBug() {
-      this.$store.dispatch("closeBug", this.$route.params.id);
+      swal({
+        title: "Are you sure you want to close this Bug?",
+        text: "Once you close this bug it can not be reopened!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(getsDeleted => {
+        if (getsDeleted) {
+          swal("Alright I Hope You Were Sure... Theres no going back now...", {
+            icon: "success"
+          });
+          this.$store.dispatch("closeBug", this.$route.params.id);
+        } else {
+          swal("Bug Shall Remain Open.");
+        }
+      });
     },
     show() {
       this.$modal.show("editedBugModal");
     },
     hide() {
       this.$modal.hide("editedBugModal");
+    },
+    editBug() {
+      this.$store.dispatch("editBug", this.$route.params.id);
     }
   },
   computed: {

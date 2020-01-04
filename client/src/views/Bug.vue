@@ -3,7 +3,7 @@
     WELCOME TO THE BUG VIEW
     <div class="row">
       <div class="col">
-        <button class="btn btn-success" @click="show">report Bug</button>
+        <button class="btn btn-primary" @click="show">report Bug</button>
         <modal name="bugModal">
           <addBug />
         </modal>
@@ -37,11 +37,6 @@
 import addBug from "../components/addBug";
 export default {
   name: "bug",
-  data() {
-    return {
-      drawAddBug: false
-    };
-  },
   mounted() {
     this.$store.dispatch("getAllBugs");
   },

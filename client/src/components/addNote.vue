@@ -1,18 +1,27 @@
 <template>
   <div class="addNote">
     <form @submit.prevent="addNote">
-      <input type="text" name="reportedBy" v-model="newNote.reportedBy" placeholder="who are you?" />
-      <input type="text" name="contents" v-model="newNote.content" placeholder="type here..." />
+      <input
+        type="text"
+        name="reportedBy"
+        v-model="newNote.reportedBy"
+        placeholder="who are you?"
+      />
+      <input
+        type="text"
+        name="contents"
+        v-model="newNote.content"
+        placeholder="type here..."
+      />
       <button type="submit" class="btn btn-primary">submit</button>
     </form>
     <div>
       <ol>
         <li v-for="note in notes" :key="note._id">
-          {{note.reportedBy}},{{note.content}}
-          <button
-            class="btn btn-danger"
-            @click.prevent="deleteNote"
-          >Delete</button>
+          {{ note.reportedBy }},{{ note.content }}
+          <button class="btn btn-danger" @click.prevent="deleteNote">
+            Delete
+          </button>
         </li>
       </ol>
     </div>
@@ -55,5 +64,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
