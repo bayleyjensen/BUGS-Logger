@@ -2,7 +2,12 @@
   <div class="addBug">
     <form @submit.prevent="addBug">
       <div>title</div>
-      <input type="text" name="title" v-model="newBug.title" placeholder="Title..." />
+      <input
+        type="text"
+        name="title"
+        v-model="newBug.title"
+        placeholder="Title..."
+      />
       <div>description</div>
       <input
         type="text"
@@ -12,7 +17,12 @@
       />
       <!-- make this its own view and have a report bug button at the top of the page like "Bug" is and it will pull up a page and you can report the bug then back in the bug (home) view it will list there  and as a streach goal after you submit the bug have it return you to the bug (home) page -->
       <div>reported by</div>
-      <input type="text" name="reportedBy" v-model="newBug.reportedBy" placeholder="who are you..." />
+      <input
+        type="text"
+        name="reportedBy"
+        v-model="newBug.reportedBy"
+        placeholder="who are you..."
+      />
       <button class="btn btn-success">submit</button>
     </form>
   </div>
@@ -42,6 +52,17 @@ export default {
         title: "",
         reportedBy: ""
       };
+      this.bugDetails();
+    },
+    hide() {
+      this.$modal.hide("bugModal");
+    },
+    bugDetails() {
+      let activeBug = this.activeBug;
+      this.$router.push({
+        name: "bugDetails",
+        params: { id: this.$store.state.activeBug.id }
+      });
     }
   }
 };

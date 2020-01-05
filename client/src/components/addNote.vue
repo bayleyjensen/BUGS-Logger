@@ -31,6 +31,7 @@
 <script>
 export default {
   name: "addNote",
+  props: ["noteData"],
   data() {
     return {
       newNote: {
@@ -52,7 +53,10 @@ export default {
       this.$store.dispatch("addNote", note);
     },
     deleteNote() {
-      this.$store.dispatch("deleteNote", this.params.id);
+      let note = {
+        noteId: this.newNote._id,
+        bugId: this.newNote.bug
+      };
     }
   },
   computed: {

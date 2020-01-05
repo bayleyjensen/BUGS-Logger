@@ -10,15 +10,9 @@
       <div class="col-3">{{ bug.description }}</div>
       <div class="col-3" v-if="bug.closed === true">closed</div>
       <div class="col-3" v-if="bug.closed === false">open</div>
-      <button @click="show">Edit Bug</button>
+      <button v-if="bug.closed === false" @click="show">Edit Bug</button>
       <modal name="editedBugModal">
         <form @submit.prevent="editBug">
-          <input
-            type="text"
-            name="title"
-            v-model="editedBug.title"
-            placeholder="New Title..."
-          />
           <input
             type="text"
             name="descripton"
@@ -56,9 +50,7 @@ export default {
   data() {
     return {
       editedBug: {
-        title: "",
-        description: "",
-        id: this.$route.params.id
+        description: ""
       }
     };
   },
@@ -92,7 +84,17 @@ export default {
       this.$modal.hide("editedBugModal");
     },
     editBug() {
-      this.$store.dispatch("editBug", this.$route.params.id);
+      let editedBug = {
+        description: this._data.editedBug.description,
+        id: this.$route.params.id
+      };
+      this.$store.dispatch("editBug", editedBug);
+      this.editedBug = {
+        description: ""
+      };
+    },
+    hideOther() {
+      this.$modal.hide("bugModal");
     }
   },
   computed: {

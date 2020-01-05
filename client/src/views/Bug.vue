@@ -8,23 +8,31 @@
           <addBug />
         </modal>
       </div>
+      <div class="col">
+        <input
+          type="checkbox"
+          name="showOpen"
+          v-on:click="showOpen = !showOpen"
+        />show open bugs
+      </div>
       <div class="col-12">
         <ul>
           <li class="d-flex" id="Bugs" v-for="bug in bugs" :key="bug._id">
-            <div class="col-4">
+            <div class="col-3">
               Bug Title:
               <router-link
                 :to="{ name: 'bugDetails', params: { id: bug._id } }"
                 >{{ bug.title }}</router-link
               >
             </div>
-            <div class="col-4">Reporter: {{ bug.reportedBy }}</div>
-            <div class="col-4" v-if="bug.closed === true">
+            <div class="col-3">Reporter: {{ bug.reportedBy }}</div>
+            <div class="col-3" v-if="bug.closed === true">
               Bugs Current Status: closed
             </div>
-            <div class="col-4" v-if="bug.closed === false">
+            <div class="col-3" v-if="bug.closed === false">
               Bug Current Satus: open
             </div>
+            <div class="col-3">{{ bug.updatedAt }}</div>
           </li>
         </ul>
       </div>
@@ -53,8 +61,14 @@ export default {
   },
   computed: {
     bugs() {
-      console.log(this.$store.state.bugs);
+      return this.$store.state.bugs.filter(bug => this.showOpen || !bug.closed);
+    },
+    bugs() {
       return this.$store.state.bugs;
+    },
+    date() {
+      let d = new Date(this.bugData.updatedAt);
+      return d.toLocalDateString();
     }
   }
 };

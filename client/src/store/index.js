@@ -38,6 +38,7 @@ export default new Vuex.Store({
     async addBug({ commit, dispatch }, bug) {
       let res = await _bugApi.post("bugs", bug);
       commit("addBug", res.data);
+      commit("setActiveBug", res.data);
     },
     async getAllBugs({ commit, dispatch }) {
       let res = await _bugApi.get("bugs");
@@ -57,18 +58,17 @@ export default new Vuex.Store({
       console.log(res.data);
       commit("setActiveNotes", res.data);
     },
-    async deleteNote({ commit, dispatch }, id) {
-      console.log(id);
-      await _bugApi.delete("notes/" + id);
-      dispatch("getNotesByBugId");
+    async deleteNote({ commit, dispatch }, note) {
+      await _bugApi.delete("notes/" + note.noteId);
+      dispatch("getNotesByBugId", note.BugId);
     },
     async closeBug({ commit, dispatch }, id) {
       let res = await _bugApi.delete("bugs/" + id);
       dispatch("getActiveBug", id);
     },
     async editBug({ commit, dispatch }, editedBug) {
-      await _bugApi.put("bugs/", +editedBug.id, editedBug);
-      commit("setActiveBug", editedBug);
+      await _bugApi.put("bugs/" + editedBug.id, editedBug.description);
+      commit("setActiveBug");
     }
   },
   modules: {}
