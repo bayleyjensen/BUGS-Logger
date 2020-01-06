@@ -26,10 +26,10 @@
               >
             </div>
             <div class="col-3">Reporter: {{ bug.reportedBy }}</div>
-            <div class="col-3" v-if="bug.closed === true">
-              Bugs Current Status: closed
+            <div id="red" class="col-3" v-if="bug.closed === true">
+              Bug Current Status: <s>closed</s>
             </div>
-            <div class="col-3" v-if="bug.closed === false">
+            <div id="green" class="col-3" v-if="bug.closed === false">
               Bug Current Satus: open
             </div>
             <div class="col-3">{{ bug.updatedAt }}</div>
@@ -60,9 +60,6 @@ export default {
     addBug
   },
   computed: {
-    bugs() {
-      return this.$store.state.bugs.filter(bug => this.showOpen || !bug.closed);
-    },
     bugs() {
       return this.$store.state.bugs;
     },

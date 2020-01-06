@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="bugDetails container-fluid">
-      <div class="row">Bug Details</div>
+      <div class="row"></div>
       <div>
         <h4 class="bugTitle">title</h4>
       </div>
       <div class="row">{{ bug.title }}</div>
-      <div class="col-3">{{ bug.reportedBy }}</div>
-      <div class="col-3">{{ bug.description }}</div>
-      <div class="col-3" v-if="bug.closed === true">closed</div>
-      <div class="col-3" v-if="bug.closed === false">open</div>
+      <div class="col-3">Reported by: {{ bug.reportedBy }}</div>
+      <div class="col-3">Content: {{ bug.description }}</div>
+      <div class="col-3" v-if="bug.closed === true">Bug Status: closed</div>
+      <div class="col-3" v-if="bug.closed === false">Bug Status: open</div>
       <button v-if="bug.closed === false" @click="show">Edit Bug</button>
       <modal name="editedBugModal">
         <form @submit.prevent="editBug">
