@@ -15,6 +15,12 @@
         <form @submit.prevent="editBug">
           <input
             type="text"
+            name="title"
+            v-model="editedBug.title"
+            placeholder="New Title..."
+          />
+          <input
+            type="text"
             name="descripton"
             v-model="editedBug.description"
             placeholder="New Descripton..."
@@ -50,7 +56,9 @@ export default {
   data() {
     return {
       editedBug: {
-        description: ""
+        title: "",
+        description: "",
+        bug: this.$route.params.id
       }
     };
   },
@@ -84,13 +92,12 @@ export default {
       this.$modal.hide("editedBugModal");
     },
     editBug() {
-      let editedBug = {
-        description: this._data.editedBug.description,
-        id: this.$route.params.id
-      };
+      let editedBug = { ...this.editedBug };
       this.$store.dispatch("editBug", editedBug);
       this.editedBug = {
-        description: ""
+        title: this.title,
+        description: this.description,
+        bug: this.$route.params.id
       };
     },
     hideOther() {

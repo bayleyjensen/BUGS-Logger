@@ -52,16 +52,28 @@ export default {
       };
       this.$store.dispatch("addNote", note);
     },
-    deleteNote() {
-      let note = {
-        noteId: this.newNote._id,
-        bugId: this.newNote.bug
-      };
+    deleteNote(id) {
+      let note = this.$store.state.notes.find(note => note.id == id);
+      swal({
+        title: "Are you sure you'd like to delete this bug?",
+        text: "blahblah",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(getsDeleted => {
+        if (getsDeleted) {
+          swal("there you go", {
+            icon: "success"
+          });
+          this.$store.dispatch("deleteNote", note);
+        } else {
+          swal("never Mind");
+        }
+      });
     }
   },
   computed: {
     notes() {
-      console.log("this is my active notes", this.$store.state.activeNotes);
       return this.$store.state.activeNotes;
     }
   }

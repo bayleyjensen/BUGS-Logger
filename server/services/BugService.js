@@ -25,7 +25,7 @@ class BugService {
   async edit(id, update) {
     let data = await _repository.findOneAndUpdate(
       { _id: id, closed: false },
-      update,
+      { description: update },
       {
         new: true
       }
