@@ -19,7 +19,7 @@
       <ol>
         <li v-for="note in notes" :key="note._id">
           {{ note.reportedBy }},{{ note.content }}
-          <button class="btn btn-danger" @click.prevent="deleteNote">
+          <button class="btn btn-danger" @click.prevent="deleteNote(note)">
             Delete
           </button>
         </li>
@@ -52,8 +52,7 @@ export default {
       };
       this.$store.dispatch("addNote", note);
     },
-    deleteNote(id) {
-      let note = this.$store.state.notes.find(note => note.id == id);
+    deleteNote(note) {
       swal({
         title: "Are you sure you'd like to delete this bug?",
         text: "blahblah",

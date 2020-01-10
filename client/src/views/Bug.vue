@@ -10,6 +10,7 @@
       </div>
       <div class="col">
         <input
+          v-if="showOpen"
           type="checkbox"
           name="showOpen"
           v-on:click="showOpen = !showOpen"
@@ -17,6 +18,7 @@
       </div>
       <div class="col-12">
         <ul>
+          <!-- FIXME Add a v-if on 'showOpen' -->
           <li class="d-flex" id="Bugs" v-for="bug in bugs" :key="bug._id">
             <div class="col-3">
               Bug Title:
@@ -45,6 +47,11 @@
 import addBug from "../components/addBug";
 export default {
   name: "bug",
+  data() {
+    return {
+      showOpen: false
+    };
+  },
   mounted() {
     this.$store.dispatch("getAllBugs");
   },
@@ -63,6 +70,10 @@ export default {
     bugs() {
       return this.$store.state.bugs;
     },
+    filteredBugs() {
+      return this.$store.state.bugs.filter(bugs => bug.closed === false);
+    },
+    //FIXME create computed for "filteredBugs"
     date() {
       let d = new Date(this.bugData.updatedAt);
       return d.toLocalDateString();

@@ -59,7 +59,7 @@ export default new Vuex.Store({
     },
     async deleteNote({ commit, dispatch }, note) {
       await _bugApi.delete("notes/" + note.id);
-      dispatch("getNotesByBugId");
+      dispatch("getNotesByBugId", note.bug);
     },
     async closeBug({ commit, dispatch }, id) {
       let res = await _bugApi.delete("bugs/" + id);
